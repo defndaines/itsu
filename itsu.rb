@@ -18,7 +18,6 @@ module Itsu
   end
 
   SECONDS_IN_DAY = 86400
-  SECONDS_IN_WEEK = SECONDS_IN_DAY * 7
 
   # Parse a duration string. Only support hours and minutes in the format: #h#m
   # Converts values to seconds, since Ruby date math works is seconds.
