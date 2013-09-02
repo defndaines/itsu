@@ -7,3 +7,5 @@ Work in Progress
 ----------------
 
 This is a work in progress. Committed methods do not necessarily do what they claim they should.
+
+Main issue right now is daylight savings. Day and month methods won't behave correctly when they cross a change.
