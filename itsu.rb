@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'time'
 
 # Simple Time checking library.
 # The goal is to check on regularly occurring events in a business cycle,
@@ -13,7 +12,6 @@ module Itsu
   # Supported period constants
   #
   module Period
-    
     WEEK = 'week'
     MONTH = 'month'
     QUARTER = 'quarter'
@@ -21,31 +19,6 @@ module Itsu
 
   SECONDS_IN_HOUR = 3600
   SECONDS_IN_DAY = 86400
-
-  # Parse a duration string. Only support hours and minutes in the format: #h#m
-  # Converts values to seconds, since Ruby date math works is seconds.
-  #
-  # @param [String] duration Duration value to parse.
-  # @return [Fixnum] number of seconds represented by the duration.
-  #
-  def parse_duration(duration)
-    match = /(\d*)h?(\d*)m?/.match(duration)
-    dur= match[2].to_i
-    dur += 60 * match[1].to_i
-    dur * 60
-  end
-
-  def _adjust_dst(time)
-    # Internal method. Assumes midnight adjustments have already occurred.
-    case time.hour
-    when 0
-      time
-    when 1
-      time - SECONDS_IN_HOUR
-    when 23
-      time + SECONDS_IN_HOUR
-    end
-  end
 
   # Roll back the time to the beginning of the day (midnight, 00:00:00)
   #
@@ -115,6 +88,18 @@ module Itsu
       time > start_of_quarter(Time.now)
     else
       raise ArgumentError, "Unrecognized period, #{period}."
+    end
+  end
+
+  def _adjust_dst(time)
+    # Internal method. Assumes midnight adjustments have already occurred.
+    case time.hour
+    when 0
+      time
+    when 1
+      time - SECONDS_IN_HOUR
+    when 23
+      time + SECONDS_IN_HOUR
     end
   end
 end
